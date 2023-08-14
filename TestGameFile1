@@ -1,0 +1,294 @@
+//include statements
+//                          NOTE: Raylib is INCOMPATIBLE with Windows.h. EXCLUDE Windows.h
+#include <iostream>
+#include <raylib.h>
+#include <raymath.h>
+#include <stdlib.h>
+#include <vector>
+#include <map>
+#include <string.h>
+
+//window dimensions
+float window_Width = 1300.0f;
+float window_Height = 700.0f;
+
+//custom color definitions
+Color royalPurple_fifty = { 120, 81, 169, 127 };
+
+//database structure definitions: Directory > StatMaps 3, 9, 27 (doubles, strings)
+struct stats3 {
+
+    double A;
+    double B;
+    double C;
+
+};
+
+struct stats9 {
+
+    double D;
+    double E;
+    double F;
+    double G;
+    double H;
+    double I;
+    double J;
+    double K;
+    double L;
+
+};
+
+struct stats27 {
+    double A1;
+    double B1;
+    double C1;
+    double D1;
+    double E1;
+    double F1;
+    double G1;
+    double H1;
+    double I1;
+    double J1;
+    double K1;
+    double L1;
+    double M1;
+    double N1;
+    double O1;
+    double P1;
+    double Q1;
+    double R1;
+    double S1;
+    double T1;
+    double U1;
+    double V1;
+    double W1;
+    double X1;
+    double Y1;
+    double Z1;
+    double AA1;
+
+};
+
+struct maps3 {
+
+    std::string mA;
+    std::string mB;
+    std::string mC;
+
+};
+
+struct maps9 {
+
+    std::string mD;
+    std::string mE;
+    std::string mF;
+    std::string mG;
+    std::string mH;
+    std::string mI;
+    std::string mJ;
+    std::string mK;
+    std::string mL;
+
+};
+
+struct maps27 {
+
+    std::string mA1;
+    std::string mB1;
+    std::string mC1;
+    std::string mD1;
+    std::string mE1;
+    std::string mF1;
+    std::string mG1;
+    std::string mH1;
+    std::string mI1;
+    std::string mJ1;
+    std::string mK1;
+    std::string mL1;
+    std::string mM1;
+    std::string mN1;
+    std::string mO1;
+    std::string mP1;
+    std::string mQ1;
+    std::string mR1;
+    std::string mS1;
+    std::string mT1;
+    std::string mU1;
+    std::string mV1;
+    std::string mW1;
+    std::string mX1;
+    std::string mY1;
+    std::string mZ1;
+    std::string mAA1;
+
+};
+
+struct dirMaps {
+
+    std::map < std::string, stats3 > mapDir3;
+    std::map < std::string, stats9 > mapDir9;
+    std::map < std::string, stats27 > mapDir27;
+};
+
+struct dirString {
+
+    std::map < std::string, maps3 > strDir3;
+    std::map < std::string, maps9 > strDir9;
+    std::map < std::string, maps27 > strDir27;
+
+};
+
+struct dirNexus {
+
+    std::map < std::string, dirMaps > dm;
+    std::map < std::string, dirString > ds;
+
+};
+
+
+
+//main function
+int main() {
+
+    int stl = 0;
+    int scl = 0;
+    
+    //
+    int Z = 3;
+    //
+
+    Vector2 center = Vector2{ window_Width / 2.0f, window_Height / 2.0f };
+
+    Texture2D image = LoadTexture("barcode_Image.png");
+
+    InitWindow(window_Width, window_Height, "Test01");
+    SetTargetFPS(60);
+
+    std::vector<std::vector<std::vector<std::string>>> vector3D(27, std::vector<std::vector<std::string>>(27, std::vector<std::string>(4, "")));
+
+    vector3D[0][0][0] = "New Game";
+    vector3D[0][0][1] = "Load Game";
+    vector3D[0][0][2] = "Options";
+    vector3D[0][0][3] = "Credits";
+    Vector2 position = { (window_Width) / 2, (window_Height) / 2 };
+
+
+    Music music = LoadMusicStream("tS.ogg");
+    InitAudioDevice();
+
+
+    while (!WindowShouldClose()) {       //Raylib functions
+
+        PlayMusicStream(music);
+        UpdateMusicStream(music);
+
+        if (Z < 2) {
+
+            scl++;
+            stl = scl / 7;
+        }
+        float text_Width = MeasureText("Test Text", 27);
+
+        switch (Z) {                    //
+            // Start playing music
+        case 0: {                    //default case
+            //spacebar toggles music
+        //    if (IsKeyPressed(KEY_SPACE)) {
+
+        //        if (IsMusicPlaying(music)) PauseMusicStream(music);
+        //        else ResumeMusicStream(music);
+        //    }
+
+            BeginDrawing();
+            ClearBackground(BLACK);
+
+            if (text_Width > window_Width) {
+
+                int lines = static_cast<int>(text_Width / window_Width) + 1;
+                int line_Height = 27;
+                for (int i = 0; i < lines; i++) {
+
+                    DrawText("RPG Game 1", center.x - window_Width / 2, center.y - scl + (line_Height * i), 27, WHITE);
+                }
+            }
+
+            else DrawText("RPG Game 1", center.x - window_Width / 2, center.y - scl, 27, WHITE);
+
+
+            EndDrawing();
+            if (scl >= 750) DrawTexture(image, center.x - 350, center.y - 350, WHITE);
+            if (scl >= 800) Z += 1, scl = 0, stl = 0;
+
+        }
+
+              break;
+
+        case 1: {
+
+            BeginDrawing();
+            ClearBackground(BLACK);
+
+            if (text_Width > window_Width) {
+
+                int lines = static_cast<int>(text_Width / window_Width) + 1;
+                int line_Height = 27;
+                for (int i = 0; i < lines; i++) {
+
+                    DrawText("By A.C. Shreffler", center.x - window_Width / 2, center.y - scl + (line_Height * i), 27, WHITE);
+                }
+            }
+
+            else DrawText("By A.C. Shreffler", center.x - window_Width / 2, center.y - scl, 27, WHITE);
+
+
+            EndDrawing();
+            if (scl >= 750) DrawTexture(image, center.x - 350, center.y - 350, WHITE);
+            if (scl >= 800) Z += 1, scl = 0, stl = 0;
+        }
+              break;
+
+        case 2: {
+
+            if (IsKeyPressed(KEY_W)) scl += 44, stl += 1;
+            if (IsKeyPressed(KEY_S)) scl -= 44, stl -= 1;
+            BeginDrawing();
+
+            ClearBackground(BLACK);
+
+            for (int i = 0; i < 4; i++) {
+
+                DrawRectangle(9, 9 + (i * 44), 420, 35, DARKGREEN);
+                DrawText(vector3D[0][0][i].c_str(), 18, 18 + (i * 44), 18, WHITE);
+
+            }
+            DrawRectangle(9, 9 - scl, 420, 35, royalPurple_fifty);
+
+            EndDrawing();
+
+            //if (IsKeyPressed(KEY_ENTER)) {
+
+               // if (stl - 1 = 0)
+           // }
+            
+        }
+              break;
+
+        case 3: {
+            
+            ClearBackground(BLACK);
+            DrawRectangle(650, 350 - scl, 27, 27, royalPurple_fifty);
+            DrawCircle(position.x - (position.x / 2), position.y, 27, BLUE);
+            DrawCircle(position.x + (position.x / 2), position.y, 27, BLUE);
+
+            EndDrawing();
+        }
+
+
+        }
+
+    }
+    CloseWindow();
+
+    return 0;
+
+}
